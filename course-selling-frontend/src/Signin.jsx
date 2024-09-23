@@ -55,19 +55,19 @@ function Signin() {
             size={"large"}
             variant="contained"
             onClick={() => {
-              fetch("http://localhost:3000/admin/signin", {
+              fetch("http://localhost:3000/admin/login", {
                 method: "POST",
                 body: JSON.stringify({
-                  email: email,
+                  username: email,
                   password: password,
                 }),
                 headers: {
-                  "content-type": "application/json",
-                  Authorization: "Bearer " + localStorage.getItem("token"),
+                  "content-type": "application/json", 
                 },
               }).then((resp) => {
                 resp.json().then((data) => {
-                  alert(data.msg);
+                  localStorage.setItem("token",data.token)
+                  window.location = "/"
                 });
               });
             }}

@@ -3,6 +3,7 @@ import Signup from "./Signup.jsx"
 import Appbar from "./Appbar.jsx"
 import Signin from "./Signin.jsx"
 import Addcourse from "./Addcourse.jsx"
+import Courses from "./Courses.jsx"
 import {BrowserRouter as Router , Route, Routes}from "react-router-dom"
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <Appbar />
       <Router>
         <Routes> 
+          <Route path="/courses" element={<Courses />}></Route>
           <Route path="/addcourse" element={<Addcourse />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
           <Route path="/signin" element={<Signin />}></Route>

@@ -18,14 +18,17 @@ function Signin() {
           justifyContent: "center",
         }}
       >
-        <Typography variant={"h6"}>welcome back please signin</Typography>
-      </div>
+        <Typography style={{border:"2px solid black",borderRadius:"10px", padding:"10px"}} variant={"h5"}>
+        welcome back please signin
+     </Typography> 
+    </div>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Card
           style={{
             width: "400px",
             padding: "20px",
+            borderRadius:"20px"
           }}
         >
           <TextField

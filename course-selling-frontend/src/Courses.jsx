@@ -30,7 +30,7 @@ function Courses() {
    )
 }
 
-function Coursecard(props) {
+ function Coursecard(props) {
      return(
         <Card style={{
             margin:"10px",

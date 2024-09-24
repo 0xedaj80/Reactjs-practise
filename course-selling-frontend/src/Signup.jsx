@@ -19,7 +19,7 @@ function Signup(){
         display:"flex",
         justifyContent:"center"
     }}>
-     <Typography variant={"h6"}>
+     <Typography style={{border:"2px solid black",borderRadius:"10px", padding:"10px"}} variant={"h5"}>
         welcome back please signup
      </Typography> 
     </div>
@@ -28,8 +28,8 @@ function Signup(){
   <div style={{ display:"flex", justifyContent:"center"}}> 
   <Card  style={{
     width:"400px",
-    padding:"20px"
-
+    padding:"20px",
+    borderRadius:"20px"
   }}>
 
     <TextField 

@@ -3,6 +3,7 @@ import { Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import Courses from "./Courses";
 
+
 function Appbar() {
     const [userEmail, setuserEmail] = useState();
 
@@ -63,6 +64,9 @@ function Appbar() {
 
 
   return (
+    <div>
+
+    
     <div
       style={{
         display: "flex",
@@ -90,6 +94,9 @@ function Appbar() {
         </div>
       </div>
     </div>
+
+
+  </div> 
   );
 }
 

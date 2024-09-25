@@ -6,14 +6,13 @@ import {atom, useRecoilState, useRecoilValue, useSetRecoilState} from "recoil"
 
 function Course(){
     const {courseId} = useParams();
-   //  const [courses, setcourses] = useState([]); 
-    const setcourses = useSetRecoilState(coursesState); 
-   //  const courses = useRecoilValue(coursesState)    
+    const [course, setcourses] = useRecoilState(coursesState)
+  
     console.log("course")
 
 
     useEffect(()=>{
-         fetch("http://localhost:3000/admin/courses/",{
+         fetch("http://localhost:3000/admin/course/" + courseId,{
             method:"GET",
             headers:{
             "Authorization":"Bearer " +localStorage.getItem("token")
@@ -21,100 +20,95 @@ function Course(){
          }).then((resp)=>{
             resp.json().then((data)=>{
                  setcourses(data.course);
+               //   console.log(data.course)
             })
          })
     },[])
     
-      // const course = courses.find((value)=>{
-      //    if(value.id == courseId){ 
-      //       return value
-      //    }
-      // }) 
-
-      // if(!course){ 
-      //   return (
-      //       <div>
-      //           wrongid..
-      //       </div>
-      //   )
-      // }
+ 
     
    return (
-    <div style={{ marginTop:"100px", display:"flex", justifyContent:"center"}}> 
-     <Coursetable courseId={courseId}></Coursetable>
-     <Updatecard courseId={courseId}></Updatecard>
+    <div>
+
+    <div>
+   <Graytopper title={course.title}></Graytopper>
     </div>
-   ) 
+    
+    <div style={{ marginTop:"100px", display:"flex", flexWrap:"wrap", justifyContent:"center"}}>         
+
+     <Updatecard courseId={courseId} ></Updatecard>
+     <Coursetable courseId={courseId}></Coursetable>
+    </div>
+   
+    </div> 
+) 
 } 
+
+function Graytopper({title}){ 
+   return (
+     <div style={{height:"250px",background:"#212121", width:"100vw",top:1, zIndex:"0", marginBottom:"-250px"}}>
+        <div style={{display:"flex", justifyContent:"center", height:"250px", flexDirection:"column"}}>
+           <div>
+              <Typography style={{color:"white", fontWeight:"600"}} variant="h3" textAlign={"center"}>
+                 {title}
+              </Typography>
+           </div>
+        </div>
+     </div>
+   ) 
+}
+
+
  function Coursetable(props) { 
 
    const courses = useRecoilValue(coursesState); 
 
-      //  const course = courses.find((value)=>{
-      //    if(value.id == props.courseId){ 
-      //       return value
-      //    }
-      // }) 
-
-      // console.log(JSON.stringify(courses))
-
-      let course = null;
-      for(let i = 0; i<courses.length; ++i){ 
-            if(courses[i]._id == props.courseId){
-                course = courses[i];
-            }
-      }
- 
-   //  if(!course){
-   //     return (
-   //       <div>
-   //          wrongid
-   //       </div>
-   //     )
-   //  }
-
-      if (!course) {
-         return (
-            <Card style={{ margin: "10px", width: "300px", minHeight: "200px" }}>
-               <Typography textAlign={"center"} variant="h5">Course not found</Typography>
-               <Typography textAlign={"center"} variant="h5">maybe wrong course Idj</Typography>
-            </Card>
-         );
-      }
 
     
    console.log("course-table")
 
      return(
+      <div>
         <Card style={{
             margin:"10px",
-            width:"300px",
-            minHeight:"200px"
+            width:"350px",
+            minHeight:"250px",
+            borderRadius:20,
+            marginTop:10,
+            marginBottom:100,
+            padding:20
+         
+         
         }}>
-            <Typography textAlign={"center"} variant="h5">{course.title}</Typography>
-            <Typography textAlign={"center"} variant="subtitle1">{course.description}</Typography>
+            <Typography textAlign={"center"} variant="h5">{courses.title}</Typography>
+            <Typography textAlign={"center"} variant="subtitle1">{courses.description}</Typography>
  <br />
-            <Typography textAlign={"center"} variant="h4">{course.price}</Typography>
+            <Typography textAlign={"center"} variant="h4">{courses.price}</Typography>
         </Card>
+        </div>
      ) 
 }
 
 function Updatecard(props){
    
    console.log("update-card")
-     const [title, setTitle] = useState();
-     const [description, setDescription] = useState();
-     const [price,setPrice] = useState();
+   
+     const [courses, setcourses] = useRecoilState(coursesState)
+
+     const [title, setTitle] = useState(courses.title);
+     const [description, setDescription] = useState(courses.description);
+     const [price,setPrice] = useState(courses.price);
     
-     const [courses, setcourses] = useRecoilState(coursesState);
-    
+   console.log(title);
+
      return (
         <div>
       
-     <div style={{ display:"flex", justifyContent:"center" ,minHeight:"200px"}}>
-     <Card  style={{ width:"800px",padding:"20px"}}>
+     <div style={{ display:"flex", justifyContent:"center" ,minHeight:"200px", marginTop:100, marginRight:700}}>
+     <Card  style={{ width:"600px",padding:"20px", borderRadius:20}}>
     <Typography textAlign={"center"} variant="h5">UPDATE COURSE</Typography> 
-     <TextField
+     <TextField 
+     value={title}
      onChange={(e)=>{
       const val = e.target.value
        setTitle(val)
@@ -126,6 +120,7 @@ function Updatecard(props){
      type={"text"}/>       
       <br /> <br /> 
     <TextField
+    value={description}
      onChange={(e)=>{
       const val = e.target.value
        setDescription(val)
@@ -137,7 +132,8 @@ function Updatecard(props){
      type={"text"} />
      <br /><br />
       
-     <TextField
+     <TextField 
+     value={price}
       onChange={(e)=>{
          const val = e.target.value
        setPrice(val)
@@ -167,21 +163,14 @@ function Updatecard(props){
         }
       }).then((resp)=>{
          resp.json().then((data)=>{
-            let Updatedcourse =[];
-            for(let i=0; i<courses.length; ++i){
-                  if(courses[i]._id == props.courseId){
-                       Updatedcourse.push({
-                         title:title,
-                         description:description,
-                         imageLink:"nothing",
-                         published:true,
-                         price:price,
-                         _id:props.courseId
-                       })  
-                  }else{
-                     Updatedcourse.push(courses[i])  
-                  }
+            let Updatedcourse ={
+                _id:courses._id,
+                title:title,
+                description:description,
+                imageLink:"nothing",
+                price
             }
+            
             setcourses(Updatedcourse)
             // alert("course updated") 
          })

@@ -39,8 +39,8 @@ function Courses() {
         }}>
             <Typography textAlign={"center"} variant="h5">{props.course.title}</Typography>
             <Typography textAlign={"center"} variant="subtitle1">{props.course.description}</Typography>
- <br />
-            <Typography textAlign={"center"} variant="h4">{props.course.price}</Typography>
+ <br />     
+            <Typography textAlign={"center"} variant="h4">RS:{props.course.price}</Typography>
         </Card>
      ) 
 }

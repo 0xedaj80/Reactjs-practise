@@ -6,6 +6,14 @@ import Addcourse from "./Addcourse.jsx"
 import Courses from "./Courses.jsx"
 import Course from "./Course.jsx"
 import {BrowserRouter as Router , Route, Routes}from "react-router-dom"
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from 'recoil';
+
 
 function App() {
 
@@ -13,6 +21,7 @@ function App() {
     <div style={{ height:"100vh",width:"100vw",
       backgroundColor:"#eeeeee" 
     }}>
+      <RecoilRoot>
       <Appbar />
       <Router>
         <Routes> 
@@ -23,7 +32,7 @@ function App() {
           <Route path="/signin" element={<Signin />}></Route>
         </Routes> 
       </Router>
-    
+    </RecoilRoot>
 
     </div>
   )

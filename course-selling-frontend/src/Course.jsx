@@ -2,10 +2,14 @@ import { useEffect, useState } from "react";
 import { json, useParams } from "react-router-dom";
 import { Typography }  from "@mui/material";
 import {TextField, Card, Button} from "@mui/material";
+import {atom, useRecoilState, useRecoilValue, useSetRecoilState} from "recoil"
 
 function Course(){
     const {courseId} = useParams();
-    const [courses, setcourses] = useState([]); 
+   //  const [courses, setcourses] = useState([]); 
+    const setcourses = useSetRecoilState(coursesState); 
+   //  const courses = useRecoilValue(coursesState)    
+    console.log("course")
 
 
     useEffect(()=>{
@@ -21,48 +25,86 @@ function Course(){
          })
     },[])
     
-      const course = courses.find((value)=>{
-         if(value.id == courseId){ 
-            return value
-         }
-      }) 
+      // const course = courses.find((value)=>{
+      //    if(value.id == courseId){ 
+      //       return value
+      //    }
+      // }) 
 
-      if(!course){ 
-        return (
-            <div>
-                wrongid..
-            </div>
-        )
-      }
+      // if(!course){ 
+      //   return (
+      //       <div>
+      //           wrongid..
+      //       </div>
+      //   )
+      // }
     
    return (
     <div style={{ marginTop:"100px", display:"flex", justifyContent:"center"}}> 
-     <Coursetable course={course}></Coursetable>
-     <Updatecard courses={courses} course={course} setcourses={setcourses}></Updatecard>
+     <Coursetable courseId={courseId}></Coursetable>
+     <Updatecard courseId={courseId}></Updatecard>
     </div>
    ) 
 } 
- function Coursetable(props) {
+ function Coursetable(props) { 
+
+   const courses = useRecoilValue(coursesState); 
+
+      //  const course = courses.find((value)=>{
+      //    if(value.id == props.courseId){ 
+      //       return value
+      //    }
+      // }) 
+
+      let course = null;
+      for(let i = 0; i<courses.length; ++i){ 
+            if(courses[i].id == props.courseId){
+                course = courses[i];
+            }
+      }
+ 
+   //  if(!course){
+   //     return (
+   //       <div>
+   //          wrongid
+   //       </div>
+   //     )
+   //  }
+
+      if (!course) {
+         return (
+            <Card style={{ margin: "10px", width: "300px", minHeight: "200px" }}>
+               <Typography textAlign={"center"} variant="h5">Course not found</Typography>
+               <Typography textAlign={"center"} variant="h5">maybe wrong course Id</Typography>
+            </Card>
+         );
+      }
+
+    
+   console.log("course-table")
+
      return(
         <Card style={{
             margin:"10px",
             width:"300px",
             minHeight:"200px"
         }}>
-            <Typography textAlign={"center"} variant="h5">{props.course.title}</Typography>
-            <Typography textAlign={"center"} variant="subtitle1">{props.course.description}</Typography>
+            <Typography textAlign={"center"} variant="h5">{course.title}</Typography>
+            <Typography textAlign={"center"} variant="subtitle1">{course.description}</Typography>
  <br />
-            <Typography textAlign={"center"} variant="h4">{props.course.price}</Typography>
+            <Typography textAlign={"center"} variant="h4">{course.price}</Typography>
         </Card>
      ) 
 }
 
 function Updatecard(props){
-    
+   
+   console.log("update-card")
      const [title, setTitle] = useState();
      const [description, setDescription] = useState();
      const [price,setPrice] = useState();
     
+     const [courses, setcourses] = useRecoilState(coursesState);
     
      return (
         <div>
@@ -72,7 +114,8 @@ function Updatecard(props){
     <Typography textAlign={"center"} variant="h5">UPDATE COURSE</Typography> 
      <TextField
      onChange={(e)=>{
-       setTitle(e.target.value)
+      const val = e.target.value
+       setTitle(val)
      }}
      fullWidth={true}
      id="outlined-basic"
@@ -82,7 +125,8 @@ function Updatecard(props){
       <br /> <br /> 
     <TextField
      onChange={(e)=>{
-       setDescription(e.target.value)
+      const val = e.target.value
+       setDescription(val)
      }}
      fullWidth={true}
      id="outlined-basic"
@@ -93,7 +137,8 @@ function Updatecard(props){
       
      <TextField
       onChange={(e)=>{
-       setPrice(e.target.value)
+         const val = e.target.value
+       setPrice(val)
      }}
      fullWidth={true}
      id="outlined-basic"
@@ -105,7 +150,7 @@ function Updatecard(props){
     <Button size={"large"} variant="contained"
     onClick={()=>{
     
-      fetch("http://localhost:3000/admin/courses/" + props.course.id ,{
+      fetch("http://localhost:3000/admin/courses/" + props.courseId ,{
         method:"PUT",
         body:JSON.stringify({
           title:title,
@@ -121,22 +166,22 @@ function Updatecard(props){
       }).then((resp)=>{
          resp.json().then((data)=>{
             let Updatedcourse =[];
-            for(let i=0; i<props.courses.length; ++i){
-                  if(props.courses[i].id == props.course.id){
+            for(let i=0; i<courses.length; ++i){
+                  if(courses[i].id == props.courseId){
                        Updatedcourse.push({
                          title:title,
                          description:description,
                          imageLink:"nothing",
                          published:true,
                          price:price,
-                         id:props.course.id
+                         id:props.courseId
                        })  
                   }else{
-                     Updatedcourse.push(props.courses[i])  
+                     Updatedcourse.push(courses[i])  
                   }
             }
-            props.setcourses(Updatedcourse)
-            alert("course updated") 
+            setcourses(Updatedcourse)
+            // alert("course updated") 
          })
       })
     }} 
@@ -155,3 +200,8 @@ function Updatecard(props){
 
 
 export default Course;
+
+const coursesState = atom({
+   key: 'coursesState', 
+   default: ' ', 
+ });

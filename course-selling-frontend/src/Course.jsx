@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { json, useParams } from "react-router-dom";
-import { Typography }  from "@mui/material";
+import { Grid2, Typography }  from "@mui/material";
 import {TextField, Card, Button} from "@mui/material";
 import {atom, useRecoilState, useRecoilValue, useSetRecoilState} from "recoil"
 
@@ -35,9 +35,15 @@ function Course(){
     </div>
     
     <div style={{ marginTop:"100px", display:"flex", flexWrap:"wrap", justifyContent:"center"}}>         
+     <Grid2 container>
+         <Grid2 item lg={8} md={12} sm={12}>
+           <Updatecard courseId={courseId} ></Updatecard>
+         </Grid2>
+         <Grid2 item lg={4} md={12} sm={12}>            
+           <Coursetable courseId={courseId}></Coursetable>
+         </Grid2>
 
-     <Updatecard courseId={courseId} ></Updatecard>
-     <Coursetable courseId={courseId}></Coursetable>
+     </Grid2>
     </div>
    
     </div> 
@@ -94,7 +100,6 @@ function Updatecard(props){
    console.log("update-card")
    
      const [courses, setcourses] = useRecoilState(coursesState)
-
      const [title, setTitle] = useState(courses.title);
      const [description, setDescription] = useState(courses.description);
      const [price,setPrice] = useState(courses.price);
@@ -106,7 +111,7 @@ function Updatecard(props){
       
      <div style={{ display:"flex", justifyContent:"center" ,minHeight:"200px", marginTop:100, marginRight:700}}>
      <Card  style={{ width:"600px",padding:"20px", borderRadius:20}}>
-    <Typography textAlign={"center"} variant="h5">UPDATE COURSE</Typography> 
+    <Typography variant="h5" style={{paddingBottom:3}}>UPDATE COURSE</Typography> 
      <TextField 
      value={title}
      onChange={(e)=>{

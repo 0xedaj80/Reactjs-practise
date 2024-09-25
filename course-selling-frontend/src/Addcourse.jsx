@@ -13,16 +13,13 @@ function Addcourse(){
 
     return (
        <div>
+        <Graytopper2></Graytopper2> 
+
         
-        <div style={{display:"flex",justifyContent:"center" ,paddingTop:"150px"}}>
-            <Typography>
-                <h1>CREATE COURSE</h1>
-            </Typography> 
-        </div>
 
 
-     <div style={{ display:"flex", justifyContent:"center"}}>
-     <Card  style={{ width:400,padding:"20px"}}>
+     <div style={{ display:"flex", justifyContent:"center", paddingTop:200}}>
+     <Card  style={{ width:600,padding:"20px", borderRadius:20}}>
      <TextField
      onChange={(e)=>{
        setTitle(e.target.value)
@@ -94,6 +91,21 @@ function Addcourse(){
      </div>
      
     )
+}
+
+
+function Graytopper2(){ 
+  return (
+    <div style={{height:"250px",background:"#212121", width:"100vw",top:1, zIndex:"0", marginBottom:"-250px"}}>
+       <div style={{display:"flex", justifyContent:"center", height:"250px", flexDirection:"column"}}>
+          <div>
+             <Typography style={{color:"white", fontWeight:"600"}} variant="h3" textAlign={"center"}>
+                {"CREATE A NEW COURSE"}
+             </Typography>
+          </div>
+       </div>
+    </div>
+  ) 
 }
 
 export default Addcourse;

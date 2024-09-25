@@ -20,7 +20,7 @@ function Course(){
          },
          }).then((resp)=>{
             resp.json().then((data)=>{
-                 setcourses(data.courses);
+                 setcourses(data.course);
             })
          })
     },[])
@@ -56,9 +56,11 @@ function Course(){
       //    }
       // }) 
 
+      // console.log(JSON.stringify(courses))
+
       let course = null;
       for(let i = 0; i<courses.length; ++i){ 
-            if(courses[i].id == props.courseId){
+            if(courses[i]._id == props.courseId){
                 course = courses[i];
             }
       }
@@ -75,7 +77,7 @@ function Course(){
          return (
             <Card style={{ margin: "10px", width: "300px", minHeight: "200px" }}>
                <Typography textAlign={"center"} variant="h5">Course not found</Typography>
-               <Typography textAlign={"center"} variant="h5">maybe wrong course Id</Typography>
+               <Typography textAlign={"center"} variant="h5">maybe wrong course Idj</Typography>
             </Card>
          );
       }
@@ -167,14 +169,14 @@ function Updatecard(props){
          resp.json().then((data)=>{
             let Updatedcourse =[];
             for(let i=0; i<courses.length; ++i){
-                  if(courses[i].id == props.courseId){
+                  if(courses[i]._id == props.courseId){
                        Updatedcourse.push({
                          title:title,
                          description:description,
                          imageLink:"nothing",
                          published:true,
                          price:price,
-                         id:props.courseId
+                         _id:props.courseId
                        })  
                   }else{
                      Updatedcourse.push(courses[i])  

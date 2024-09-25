@@ -13,7 +13,7 @@ function Courses() {
          }
      }).then((resp)=>{
          resp.json().then((data)=>{
-             setcourses(data.courses)
+             setcourses(data.course)
          })
      })
    },[])

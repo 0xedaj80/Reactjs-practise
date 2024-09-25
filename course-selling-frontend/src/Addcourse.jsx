@@ -81,7 +81,7 @@ function Addcourse(){
         }
       }).then((resp)=>{
          resp.json().then((data)=>{
-           alert(data.msg)
+           alert(data.message)
          })
       })
     }} 

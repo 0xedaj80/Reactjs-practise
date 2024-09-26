@@ -1,8 +1,30 @@
-# React + Vite
+# COURSE-SELLING-WEBSITE
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+its a basic course selling website in this admin can signup/login and create the courses and user can also signup/login and purchase the respective courses
 
-Currently, two official plugins are available:
+FUNCTIONALITIES:-
+ADMIN:---
+1. signup
+2. login
+3. logout
+4. add-course
+5. view all coures
+6. edit course
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+USER:---
+1. signup
+2. login
+3. logout
+4. view all coures
+5. buy any course
+6. view the purchased course
+
+
+
+TO RUN LOCALLY:-
+1. CLONE REPO
+2. RUN npm install for frontend
+3. RUN npm install for server
+4. RUN FRONTEND npm run dev
+5. RUN BACKEND node index.js
+   

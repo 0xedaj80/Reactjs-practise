@@ -20,6 +20,11 @@ USER:---
 6. view the purchased course
 
 
+WEBSITE-ARCHITECTURE:-
+![My Logo](architecture.png)
+
+
+
 
 TO RUN LOCALLY:-
 1. CLONE REPO

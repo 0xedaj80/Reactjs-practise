@@ -160,7 +160,8 @@ function Updatecard(props){
           description:description,
           imageLink:"nothing",
           published:true,
-          price:price
+          price:price,
+          
         }),
         headers:{
           "content-type":"application/json",

@@ -1,6 +1,7 @@
 import { Card } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Typography , Button} from "@mui/material";
+import { red } from "@mui/material/colors";
 
 
 function Courses() {
@@ -22,7 +23,9 @@ function Courses() {
   return (
     <div
       style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+      
     >
+      
       {/* {courses} */}
       {courses.map((value) => {
         return <Coursecard course={value}></Coursecard>;
@@ -38,7 +41,8 @@ function Coursecard(props) {
         margin: "10px",
         width: "300px",
         minHeight: "200px",
-        padding:"10px"
+        padding:"10px",
+        borderRadius:20
       }}
     >
       <Typography textAlign={"center"} variant="h5">
@@ -47,6 +51,9 @@ function Coursecard(props) {
       <Typography textAlign={"center"} variant="subtitle1">
         {props.course.description}
       </Typography>
+      <Typography  variant="subtitle1" style={{marginLeft:100 , color:"red"}}>
+         Author: {props.course.author} </Typography>
+      
       <br />
       <Typography textAlign={"center"} variant="h4">
         RS:{props.course.price}

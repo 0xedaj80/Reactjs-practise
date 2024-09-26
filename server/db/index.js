@@ -18,7 +18,8 @@ const courseSchema = new mongoose.Schema({
     description: String,
     price: Number,
     imageLink: String,
-    published: Boolean
+    published: Boolean,
+    author:String,
   });
 
 // defining mongoose models

@@ -28,23 +28,20 @@ function Course(){
  
     
    return (
-    <div>
-
-    <div>
+    <div> 
    <Graytopper title={course.title}></Graytopper>
-    </div>
+
     
-    <div style={{ marginTop:"100px", display:"flex", flexWrap:"wrap", justifyContent:"center"}}>         
      <Grid2 container>
          <Grid2 item lg={8} md={12} sm={12}>
            <Updatecard courseId={courseId} ></Updatecard>
          </Grid2>
          <Grid2 item lg={4} md={12} sm={12}>            
            <Coursetable courseId={courseId}></Coursetable>
+
          </Grid2>
 
      </Grid2>
-    </div>
    
     </div> 
 ) 
@@ -52,7 +49,7 @@ function Course(){
 
 function Graytopper({title}){ 
    return (
-     <div style={{height:"250px",background:"#212121", width:"100vw",top:1, zIndex:"0", marginBottom:"-250px"}}>
+     <div style={{height:"250px",background:"#212121", width:"100vw",top:0, zIndex:"0", marginBottom:"-250px"}}>
         <div style={{display:"flex", justifyContent:"center", height:"250px", flexDirection:"column"}}>
            <div>
               <Typography style={{color:"white", fontWeight:"600"}} variant="h3" textAlign={"center"}>
@@ -74,22 +71,25 @@ function Graytopper({title}){
    console.log("course-table")
 
      return(
-      <div>
+      <div style={{display:"flex",marginLeft:500,  marginTop:100,justifyContent:"center"}}>
         <Card style={{
             margin:"10px",
             width:"350px",
             minHeight:"250px",
             borderRadius:20,
-            marginTop:10,
-            marginBottom:100,
-            padding:20
+            marginRight:50,
+            paddingBottom:15,
+            zIndex:2
          
          
         }}>
+          <div style={{marginLeft:10}}>
             <Typography textAlign={"center"} variant="h5">{courses.title}</Typography>
             <Typography textAlign={"center"} variant="subtitle1">{courses.description}</Typography>
  <br />
+           
             <Typography textAlign={"center"} variant="h4">{courses.price}</Typography>
+        </div>
         </Card>
         </div>
      ) 
@@ -107,22 +107,24 @@ function Updatecard(props){
    console.log(title);
 
      return (
-        <div>
       
-     <div style={{ display:"flex", justifyContent:"center" ,minHeight:"200px", marginTop:100, marginRight:700}}>
-     <Card  style={{ width:"600px",padding:"20px", borderRadius:20}}>
-    <Typography variant="h5" style={{paddingBottom:3}}>UPDATE COURSE</Typography> 
+      
+     <div style={{ display:"flex", justifyContent:"center", marginLeft:200 }}>
+     <Card  style={{ width:600,marginTop:200, borderRadius:20}}>
+    <div style={{padding:20}}> 
+    <Typography variant="h5" style={{marginBottom:10}}>UPDATE COURSE</Typography>
+   
      <TextField 
      value={title}
      onChange={(e)=>{
       const val = e.target.value
        setTitle(val)
      }}
+     style={{marginBottom:10}}
      fullWidth={true}
-     id="outlined-basic"
      label="title"
      variant="outlined"
-     type={"text"}/>       
+     />       
       <br /> <br /> 
     <TextField
     value={description}
@@ -130,11 +132,12 @@ function Updatecard(props){
       const val = e.target.value
        setDescription(val)
      }}
+     
+     style={{marginBottom:10}}
      fullWidth={true}
-     id="outlined-basic"
      label="description"
      variant="outlined"
-     type={"text"} />
+      />
      <br /><br />
       
      <TextField 
@@ -143,11 +146,12 @@ function Updatecard(props){
          const val = e.target.value
        setPrice(val)
      }}
+     
+     style={{marginBottom:10}}
      fullWidth={true}
-     id="outlined-basic"
      label="Price"
      variant="outlined"
-     type={"text"} />
+      />
      <br /><br />
 
     <Button size={"large"} variant="contained"
@@ -184,14 +188,14 @@ function Updatecard(props){
     }} 
     
     >update course</Button>
-    
+    </div>  
    </Card>   
    
    </div> 
 
 
 
-        </div>
+      
      ) 
 }
 

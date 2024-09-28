@@ -102,7 +102,8 @@ function Appbar() {
       </div> */}
     </div>
   );
-  }
+  } 
+  
 
 
   return (
@@ -110,7 +111,7 @@ function Appbar() {
 
     
     <div
-      style={{
+      style={{ 
         display: "flex",
         justifyContent: "space-between",
         padding:"10px",

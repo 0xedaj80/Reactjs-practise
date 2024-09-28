@@ -35,7 +35,7 @@ router.post('/login', async (req, res) => {
         const token = generateJwt(admin)
         res.status(200).json({msg:"logged in successfully", token})
      }else{ 
-         res.sendStatus(401).json({msg:"login failed "}) 
+         res.status(401).json({msg:"wrong password or username"})
      }
      
 }); 

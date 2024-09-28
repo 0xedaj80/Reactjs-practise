@@ -81,6 +81,7 @@ function Signin() {
                })
               
                const data = response.data;
+               alert(data.msg)
                   localStorage.setItem("token",data.token)
                   window.location = "/"
             }}

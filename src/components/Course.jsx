@@ -128,10 +128,16 @@ function Updatecard(props) {
   console.log("update-card");
 
   const [courses, setcourses] = useRecoilState(coursesState);
-  const [title, setTitle] = useState(courses.title);
-  const [description, setDescription] = useState(courses.description);
-  const [price, setPrice] = useState(courses.price);
+  const [title, setTitle] = useState(courses.title || "");
+  const [description, setDescription] = useState(courses.description || "");
+  const [price, setPrice] = useState(courses.price || "");
 
+  useEffect(() => {
+    setTitle(courses.title); // Sync local state with atom when atom changes
+    setDescription(courses.description); // Sync local state with atom when atom changes
+    setPrice(courses.price); // Sync local state with atom when atom changes
+  }, [courses]);
+  
   console.log(title);
 
   return (
@@ -235,5 +241,5 @@ export default Course;
 
 const coursesState = atom({
   key: "coursesState",
-  default: " ",
+  default:"",
 });

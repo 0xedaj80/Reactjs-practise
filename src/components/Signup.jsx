@@ -3,10 +3,12 @@ import TextField from '@mui/material/TextField';
 import { Card } from '@mui/material';
 import { Typography } from '@mui/material';
 import { useState } from 'react';
+import {useNavigate} from "react-router-dom"
 import axios from "axios"
 
 
-function Signup(){
+function Signup(){ 
+  const navigate = useNavigate();
    const [email, setEmail] = useState();
    const [password, setPassword] = useState();
 
@@ -66,7 +68,7 @@ function Signup(){
          }).then((resp)=>{
            resp.json().then((data)=>{
             localStorage.setItem("token",data.token)
-            window.location = "/"
+            navigate("/")
            })
          })   
 

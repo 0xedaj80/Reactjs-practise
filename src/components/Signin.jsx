@@ -4,8 +4,9 @@ import { Card } from "@mui/material";
 import { Typography } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
-
+import {useNavigate} from "react-router-dom"
 function Signin() {
+  const navigate = useNavigate()
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
@@ -58,23 +59,7 @@ function Signin() {
           <Button
             size={"large"}
             variant="contained"
-            onClick={ async () => {
-              // fetch("http://localhost:3000/admin/login", {
-              //   method: "POST",
-              //   body: JSON.stringify({
-              //     username: email,
-              //     password: password,
-              //   }),
-              //   headers: {
-              //     "content-type": "application/json", 
-              //   },
-              // }).then((resp) => {
-              //   resp.json().then((data) => {
-              //     localStorage.setItem("token",data.token)
-              //     window.location = "/"
-              //   });
-              // });
-            
+            onClick={ async () => { 
                const response = await axios.post("http://localhost:3000/admin/login",{
                   username:email,
                   password:password 

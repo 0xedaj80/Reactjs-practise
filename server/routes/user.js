@@ -1,5 +1,5 @@
 const express = require("express");
-const { authenticateJwt, generateJwt } = require("../middleware/auth");
+const { authenticateJwt, generateJwt ,generateJwtuser, authenticateJwtuser } = require("../middleware/auth");
 const {User,Course} = require("../db/index")
 
 
@@ -13,38 +13,52 @@ const router = express.Router();
 router.post('/signup', async (req, res) => {
 
     const user = req.body;
+    console.log("signup")
     const exist_user = await User.findOne({username:user.username}); 
     if(exist_user){ 
       res.status(401); 
     }else{  
        const newuser = new User(user); 
-       await newuser.save() 
-       let token = generateJwt(user);
-       res.json({msg:"user created successfully", token})          
+       const a = await newuser.save()
+      
+       let token = generateJwtuser(user,"user");
+       res.json({msg:"user created successfully", token})
+
     }
     
 });
 
 router.post('/login',async (req, res) => { 
-    const {username, password } = req.headers;
+  console.log("you eneterd bitch")
+    const {username, password } = req.body;
     
     const user = await User.findOne({username,password})
+
+    console.log(user)
+
     
     if(user){ 
-         const token = generateJwt(user);
+
+         const token = generateJwtuser(user,"user");
+         
          res.json({msg:"user logged in successfully", token}) 
     }else{ 
-         res.sendStatus(404).json({msg:"user authentication failed "});
+         res.sendStatus(404);
     }
   
 });
 
-router.get('/courses', authenticateJwt, async (req, res) => {
+
+router.get("/me", authenticateJwtuser, (req,res)=>{
+     res.json({username:req.user.username}) 
+})
+
+router.get('/courses', authenticateJwtuser, async (req, res) => {
         const course = await Course.find({published:true});
         res.json({course}) 
 });
 
-router.post('/courses/:courseId',authenticateJwt, async (req, res) => {
+router.post('/courses/:courseId',authenticateJwtuser, async (req, res) => {
 
         const courseId = req.params.courseId;
         
@@ -66,7 +80,7 @@ router.post('/courses/:courseId',authenticateJwt, async (req, res) => {
         } 
 });
 
-router.get('/purchasedCourses', authenticateJwt, async (req, res) => {
+router.get('/purchasedCourses', authenticateJwtuser, async (req, res) => {
     const user = User.findOne({username:req.user.username})
     if(user){ 
      res.json({purchasedcourses:user.purchasedCourses || []})

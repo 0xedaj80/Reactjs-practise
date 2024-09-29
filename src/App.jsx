@@ -1,11 +1,11 @@
 
-import Signup from "./Signup.jsx"
-import Appbar from "./Appbar.jsx"
-import Signin from "./Signin.jsx"
-import Addcourse from "./Addcourse.jsx"
-import Courses from "./Courses.jsx"
-import Course from "./Course.jsx"
-import Home from "./Home.jsx"
+import Signup from "./components/Signup.jsx"
+import Appbar from "./components/Appbar.jsx"
+import Signin from "./components/Signin.jsx"
+import Addcourse from "./components/Addcourse.jsx"
+import Courses from "./components/Courses.jsx"
+import Course from "./components/Course.jsx"
+import Home from "./components/Home.jsx"
 import { Typography} from "@mui/material";
 import {BrowserRouter as Router , Route, Routes}from "react-router-dom"
 import {
@@ -24,8 +24,9 @@ function App() {
       backgroundColor:"#eeeeee" 
     }}>
       <RecoilRoot>
-      <Appbar />
       <Router>
+        
+      <Appbar />
         <Routes> 
           <Route path="/courses" element={<Courses />}></Route>
           <Route path="/" element={<Home />}></Route>

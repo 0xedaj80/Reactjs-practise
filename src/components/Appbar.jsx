@@ -3,34 +3,14 @@ import { Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import Courses from "./Courses";
 import axios from "axios";
-
+import {useNavigate} from "react-router-dom"
 
 function Appbar() {
+    const navigate = useNavigate()
     const [userEmail, setuserEmail] = useState();
 
 
    useEffect(  ()=>{
-    //  fetch("http://localhost:3000/admin/me", { 
-    //     method:"GET",
-    //     headers:{
-    //        "Authorization":"Bearer " +localStorage.getItem("token")
-    //     } 
-    //  }).then((resp)=>{
-    //    resp.json().then((data)=>{
-    //     //  console.log(data)
-    //      setuserEmail(data.username)   
-    //    })
-    //  }) 
-
-    //  const response = await axios.get("http://localhost:3000/admin/me", {
-    //    headers:{
-    //        "Authorization":"Bearer " +localStorage.getItem("token")
-    //     }
-    //   }
-    //  )
-
-    //  setuserEmail(response.data.username)
-
     const fetchUserData = async () => {
       try {
         const response = await axios.get("http://localhost:3000/admin/me", {
@@ -63,7 +43,9 @@ function Appbar() {
         padding:"10px",
       }}
     >
-      <div>
+      <div style={{cursor:"pointer"}} onClick={()=>{
+         navigate("/")
+      }}>
         <Typography variant={"h5"}>COURSERA </Typography>
       </div>
       <div style={{
@@ -78,20 +60,21 @@ function Appbar() {
             marginRight:"10px"
         }}>
           <Button variant={"contained"} style={{borderRadius:"10px", backgroundColor:"black"}} onClick={()=>{
-             window.location = "/addcourse"
+             navigate("/addcourse")
           }}>add course</Button> 
         </div>
         <div style={{
             marginRight:"10px"
         }}>
           <Button variant={"contained"} style={{borderRadius:"10px", backgroundColor:"black"}}  onClick={()=>{
-             window.location = "/courses"
+               navigate("/courses")
           }} >courses</Button> 
         </div>
         <div> 
           <Button variant={"contained"} style={{borderRadius:"10px", backgroundColor:"red"}} onClick={()=>{
             localStorage.removeItem("token") 
-            window.location = "/"
+            // window.location = "/"
+            setuserEmail(null)
           }}>logout</Button>
         </div>
       </div>
@@ -127,12 +110,12 @@ function Appbar() {
             marginRight:"10px"
         }}>
           <Button variant={"contained"} style={{borderRadius:"10px"}} onClick={()=>{
-            window.location = "/signin" 
+            navigate("/signin") 
           }} >signin</Button>
         </div>
         <div>
           <Button variant={"contained"} style={{borderRadius:"10px"}} onClick={()=>{
-            window.location = "/signup"
+            navigate("/signup")
           }}>signup</Button>
         </div>
       </div>

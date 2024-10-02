@@ -42,7 +42,7 @@ function Coursecard(props) {
         width: "300px",
         minHeight: "200px",
         padding:"10px",
-        borderRadius:20
+        borderRadius:20,
       }}
     >
       <Typography textAlign={"center"} variant="h5">
@@ -65,7 +65,17 @@ function Coursecard(props) {
         }}>
           edit
         </Button>
+         <Button style={{marginLeft:10}} size={"large"} variant="contained" onClick={() => {
+               window.location = "/course/"+ props.course._id 
+        }}>
+          delete
+        </Button>
+                  
+
+
+
       </div>
+      
     </Card>
   );
 }

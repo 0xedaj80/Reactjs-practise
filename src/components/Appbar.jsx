@@ -8,9 +8,7 @@ import {useNavigate} from "react-router-dom"
 function Appbar() {
     const navigate = useNavigate()
     const [userEmail, setuserEmail] = useState();
-
-
-   useEffect(  ()=>{
+ 
     const fetchUserData = async () => {
       try {
         const response = await axios.get("http://localhost:3000/admin/me", {
@@ -24,10 +22,8 @@ function Appbar() {
       }
     };
 
-    // Call the async function
+   useEffect(()=>{   
     fetchUserData();
-
-
   }, [])
 
 
@@ -41,12 +37,14 @@ function Appbar() {
         display: "flex",
         justifyContent: "space-between",
         padding:"10px",
+        backgroundColor:"#e4e3e3",
+        borderRadius:20
       }}
     >
       <div style={{cursor:"pointer"}} onClick={()=>{
          navigate("/")
       }}>
-        <Typography variant={"h5"}>COURSERA </Typography>
+        <Typography variant={"h5"} style={{color:"#004ed6", fontWeight:"bold", border:"2px solid", borderRadius:10, padding:2}}>COURSERA </Typography>
       </div>
       <div style={{
         display:"flex"

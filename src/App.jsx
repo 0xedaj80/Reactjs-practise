@@ -4,7 +4,7 @@ import Signin from "./components/Signin.jsx";
 import Addcourse from "./components/Addcourse.jsx";
 import Courses from "./components/Courses.jsx";
 import Course from "./components/Course.jsx";
-import Home from "./components/Home.jsx";
+import Landing from "./components/Landing.jsx"
 import { Typography } from "@mui/material";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import {
@@ -18,14 +18,14 @@ import {
 function App() {
   return (
     <div
-      style={{ height: "100vh", width: "100vw", backgroundColor: "#eeeeee" }}
+      style={{ height: "100vh", width: "100wh", backgroundColor: "#eeeeee" }}
     >
       <RecoilRoot>
         <Router>
           <Appbar />
-          <Routes>
+          <Routes> 
+            <Route path="/" element={<Landing />}></Route>
             <Route path="/courses" element={<Courses />}></Route>
-            <Route path="/" element={<Home />}></Route>
             <Route path="/course/:courseId" element={<Course />}></Route>
             <Route path="/addcourse" element={<Addcourse />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
@@ -44,7 +44,7 @@ function Graytopper() {
       style={{
         height: "250px",
         background: "#212121",
-        width: "100vw",
+        width:"100vw",
         top: 0,
         zIndex: "0",
         marginBottom: "-250px",

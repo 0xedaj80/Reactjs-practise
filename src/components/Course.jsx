@@ -30,7 +30,7 @@ function Course() {
 
   return (
     <div>
-      <Graytopper title={course.title}></Graytopper>
+      <Graytopper title={course.title} author={course.author}></Graytopper>
 
       <Grid container >
         <Grid item lg={8} md={12} sm={12}>
@@ -44,7 +44,7 @@ function Course() {
   );
 }
 
-function Graytopper({ title }) {
+function Graytopper({ title, author }) {
   return (
     <div
       style={{
@@ -72,6 +72,13 @@ function Graytopper({ title }) {
             textAlign={"center"}
           >
             {title}
+          </Typography>
+          <Typography
+            style={{ color: "red", fontWeight: "600" }}
+            variant="h6"
+            textAlign={"center"}
+          >
+            Author: {author}
           </Typography>
         </div>
       </div>
@@ -104,6 +111,7 @@ function Coursetable(props) {
           marginRight: 50,
           paddingBottom: 15,
           zIndex: 2,
+          marginTop:50
         }}
       >
         <div style={{ marginLeft: 10 }}>
@@ -131,6 +139,7 @@ function Updatecard(props) {
   const [title, setTitle] = useState(courses.title || "");
   const [description, setDescription] = useState(courses.description || "");
   const [price, setPrice] = useState(courses.price || "");
+  
 
   useEffect(() => {
     setTitle(courses.title); // Sync local state with atom when atom changes
@@ -221,6 +230,7 @@ function Updatecard(props) {
                     description: description,
                     imageLink: "nothing",
                     price,
+                    author:courses.author,
                   };
 
                   setcourses(Updatedcourse);

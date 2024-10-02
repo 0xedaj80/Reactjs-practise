@@ -63,14 +63,12 @@ router.post('/courses/:courseId',authenticateJwtuser, async (req, res) => {
         const courseId = req.params.courseId;
         
         const course = await Course.findById(courseId)
-        if(course){ 
+
+	if(course){ 
            const user = await User.findOne({username:req.user.username})
-          // console.log(course);
-          // console.log(user);
            if(user){ 
                user.purchasedCourses.push(course);
                await user.save();
-              // console.log(user)
               res.json({msg:"course purchased successfully"})
            }else{ 
             res.json({msg:"user not found "})

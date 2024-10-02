@@ -15,6 +15,7 @@ const generateJwtuser = (user, role)=>{
      return jwt.sign(payload, secretkeyuser, {expiresIn:"1h"}) 
     
 }
+
 const authenticateJwtuser = (req,res,next)=>{
     const authtoken = req.headers.authorization;
 
@@ -31,9 +32,9 @@ const authenticateJwtuser = (req,res,next)=>{
        });
     }else{ 
          res.status(403).json({msg:"authentication failed"})
-    }
-     
+    }     
 }
+
 const authenticateJwt = (req,res,next)=>{
     const authtoken = req.headers.authorization;
 

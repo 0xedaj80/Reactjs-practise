@@ -2,18 +2,22 @@ import { useEffect, useState } from "react";
 import { json, useParams } from "react-router-dom";
 import { Grid, Typography } from "@mui/material";
 import { TextField, Card, Button } from "@mui/material";
+import { Loading } from "./Loading";
 import {
   atom,
   useRecoilState,
   useRecoilValue,
   useSetRecoilState,
 } from "recoil";
+import { courseState } from "../store/atoms/course";
+import { courseAuthor, courseDescription, coursePrice, courseTitle, isCourseLoading } from "../store/selectors/course";
 
 function Course() {
   const { courseId } = useParams();
-  const [course, setcourses] = useRecoilState(coursesState);
-
-  console.log("course");
+  const setcourses = useSetRecoilState(courseState)
+  const courseLoading = useRecoilValue(isCourseLoading) 
+  
+  // console.log("course");
 
   useEffect(() => {
     fetch("http://localhost:3000/admin/course/" + courseId, {
@@ -23,28 +27,53 @@ function Course() {
       },
     }).then((resp) => {
       resp.json().then((data) => {
-        setcourses(data.course);
+        setcourses({
+          isLoading:false,
+          course:data.course
+    
+        });
+        console.log(data.course)
       });
-    });
+    }).catch(e=>{
+       setcourses({
+        isLoading:false,
+        course:null
+       })
+      })
+    
+
+
+
   }, []);
+
+  if(courseLoading){
+     return (
+      <Loading></Loading>
+     )
+  }
 
   return (
     <div>
-      <Graytopper title={course.title} author={course.author}></Graytopper>
+      <Graytopper ></Graytopper>
 
       <Grid container >
         <Grid item lg={8} md={12} sm={12}>
-          <Updatecard courseId={courseId}></Updatecard>
+          <Updatecard ></Updatecard>
         </Grid>
         <Grid item lg={4} md={12} sm={12}>
-          <Coursetable courseId={courseId}></Coursetable>
+          <Coursetable ></Coursetable>
         </Grid>
       </Grid>
     </div>
   );
 }
 
-function Graytopper({ title, author }) {
+function Graytopper() {
+
+   const title = useRecoilValue(courseTitle)
+   const author = useRecoilValue(courseAuthor)
+  
+
   return (
     <div
       style={{
@@ -86,8 +115,11 @@ function Graytopper({ title, author }) {
   );
 }
 
-function Coursetable(props) {
-  const courses = useRecoilValue(coursesState);
+function Coursetable() {
+  const title = useRecoilValue(courseTitle)
+  const description = useRecoilValue(courseDescription);
+  const price = useRecoilValue(coursePrice)
+
 
   console.log("course-table");
 
@@ -116,15 +148,15 @@ function Coursetable(props) {
       >
         <div style={{ marginLeft: 10 }}>
           <Typography textAlign={"center"} variant="h5">
-            {courses.title}
+            {title}
           </Typography>
           <Typography textAlign={"center"} variant="subtitle1">
-            {courses.description}
+            {description}
           </Typography>
           <br />
 
           <Typography textAlign={"center"} variant="h4">
-            {courses.price}
+            {price}
           </Typography>
         </div>
       </Card>
@@ -132,20 +164,16 @@ function Coursetable(props) {
   );
 }
 
-function Updatecard(props) {
-  console.log("update-card");
-
-  const [courses, setcourses] = useRecoilState(coursesState);
-  const [title, setTitle] = useState(courses.title || "");
-  const [description, setDescription] = useState(courses.description || "");
-  const [price, setPrice] = useState(courses.price || "");
+function Updatecard() {
+ 
+  const [courseDetails, setCourse ] = useRecoilState(courseState)
   
 
-  useEffect(() => {
-    setTitle(courses.title); // Sync local state with atom when atom changes
-    setDescription(courses.description); // Sync local state with atom when atom changes
-    setPrice(courses.price); // Sync local state with atom when atom changes
-  }, [courses]);
+  const [title, setTitle] = useState(courseDetails.course.title);
+  const [description, setDescription] = useState(courseDetails.course.description);
+  const [price, setPrice] = useState(courseDetails.course.price);
+  
+
   
   console.log(title);
 
@@ -209,7 +237,7 @@ function Updatecard(props) {
             size={"large"}
             variant="contained"
             onClick={() => {
-              fetch("http://localhost:3000/admin/courses/" + props.courseId, {
+              fetch("http://localhost:3000/admin/courses/" + courseDetails.course._id ,{
                 method: "PUT",
                 body: JSON.stringify({
                   title: title,
@@ -225,15 +253,18 @@ function Updatecard(props) {
               }).then((resp) => {
                 resp.json().then((data) => {
                   let Updatedcourse = {
-                    _id: courses._id,
+                    _id: courseDetails.course._id,
                     title: title,
                     description: description,
                     imageLink: "nothing",
                     price,
-                    author:courses.author,
+                    author:courseDetails.course.author,
                   };
 
-                  setcourses(Updatedcourse);
+                  setCourse({
+                    course:Updatedcourse,
+                    isLoading:false
+                  })
                   // alert("course updated")
                 });
               });
@@ -249,7 +280,3 @@ function Updatecard(props) {
 
 export default Course;
 
-const coursesState = atom({
-  key: "coursesState",
-  default:"",
-});

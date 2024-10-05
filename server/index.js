@@ -17,7 +17,6 @@ app.use("/admin", adminRouter)
 app.use("/users", userRouter)
 
 async function main(){
-
   await mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true, dbName: "course-selling" });
   app.listen(3000, () => {
   console.log('Server is listening on port 3000');

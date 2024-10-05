@@ -7,22 +7,27 @@ import Course from "./components/Course.jsx";
 import Landing from "./components/Landing.jsx"
 import { Typography } from "@mui/material";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {userState} from "./store/atoms/user.js"
+import axios from "axios";
 import {
   RecoilRoot,
   atom,
   selector,
   useRecoilState,
   useRecoilValue,
+  useSetRecoilState,
 } from "recoil";
+import { useEffect } from "react";
 
 function App() {
   return (
     <div
-      style={{ height: "100vh", width: "100wh", backgroundColor: "#eeeeee" }}
+      style={{ height: "100vh", backgroundColor: "#eeeeee" }}
     >
       <RecoilRoot>
         <Router>
           <Appbar />
+          <Inituser />
           <Routes> 
             <Route path="/" element={<Landing />}></Route>
             <Route path="/courses" element={<Courses />}></Route>
@@ -37,6 +42,52 @@ function App() {
     </div>
   );
 }
+
+
+function Inituser(){
+ 
+  const setUser = useSetRecoilState(userState)
+  
+   const fetchUserData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/admin/me", {
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        if(response.data.username){     
+        setUser({
+          isLoading:false,
+          userEmail:response.data.username
+        })
+        }else{
+         setUser({
+          isLoading:false,
+          userEmail:null
+        }) 
+        }
+      
+      
+      } 
+      catch (error) {
+        setUser({
+          isLoading:false,
+          userEmail:null
+        })
+      }
+    };
+
+
+   useEffect(()=>{   
+    fetchUserData();
+  }, [])
+
+
+   return (
+    <div></div>
+   ) 
+}
+
 
 function Graytopper() {
   return (

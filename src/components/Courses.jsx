@@ -2,10 +2,13 @@ import { Card } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Typography , Button} from "@mui/material";
 import { red } from "@mui/material/colors";
-
+import { Loading } from "./Loading";
+import { useNavigate } from "react-router-dom";
+import EditIcon from '@mui/icons-material/Edit';
 
 function Courses() {
-  const [courses, setcourses] = useState([]);
+  
+  const [courses, setcourses] =  useState([]);
 
   useEffect(() => {
     fetch("http://localhost:3000/admin/courses/" , {
@@ -19,6 +22,12 @@ function Courses() {
       });
     });
   }, []);
+
+  if(!courses){
+     return (
+      <Loading></Loading>
+     ) 
+  }
 
   return (
     <div
@@ -35,6 +44,7 @@ function Courses() {
 }
 
 function Coursecard(props) {
+  const navigate = useNavigate();
   return (
     <Card
       style={{
@@ -59,13 +69,17 @@ function Coursecard(props) {
         RS:{props.course.price}
       </Typography>
 
-      <div style={{display:"flex", justifyContent:"center" , marginTop:"10px"}}> 
+      <div style={{display:"flex", justifyContent:"center" , marginTop:"10px", }}> 
         <Button size={"large"} variant="contained" onClick={() => {
-               window.location = "/course/"+ props.course._id 
-        }}>
+              //  window.location = "/course/"+ props.course._id
+               navigate("/course/"+ props.course._id) 
+        }}
+        startIcon={<EditIcon />}
+        style={{borderRadius:40}}
+        >
           edit
         </Button>
-         <Button style={{marginLeft:10}} size={"large"} variant="contained" onClick={() => {
+         <Button style={{marginLeft:10, borderRadius:40}} size={"large"} variant="contained" onClick={() => {
                window.location = "/course/"+ props.course._id 
         }}>
           delete

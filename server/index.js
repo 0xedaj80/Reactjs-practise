@@ -9,15 +9,7 @@ const cors = require("cors")
 const app = express();
 
 app.use(express.json());
-
-const corsOptions = {
-  origin: 'https://course-selling-website-pi.vercel.app', // Allow this specific domain
-  methods: ['GET', 'POST', 'PUT'], // Allow only these methods
-  Credential:true // Some browsers (like IE11) choke on 204
-};
-
-app.use(cors(corsOptions)); // Use CORS middleware with defined options
-
+app.use(cors());
 
 
 
